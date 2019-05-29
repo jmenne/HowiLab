@@ -27,7 +27,8 @@ Convert-WindowsImage -SourcePath .\REFW10X64.wim -Edition 1 -VHDPath Q:\wim2vhd\
 
 Will man Generation-1 VMs erstellen, benötigt man .vhd Images.  
 Will man statttdessen Generation-2 VMs, benötigt man .vhdx Images.  
-Durch die *unattend.xml* wird für das integrierte Administrator Konto das Kennwort **Pa$$w0rd** vorgegeben.
+Durch die *unattend.xml* wird für das integrierte Administrator Konto das Kennwort **Pa$$w0rd** vorgegeben.  
+Die **LiteTouchMedia.iso** muss man sich separat [hier](https://1drv.ms/u/s!AsFZQvazEgntgu93nnfuGs4JMov5DA) herunterladen, da sie für GitHub zu groß ist.
 
 ## Erstellen der Umgebung
 
