@@ -46,19 +46,26 @@ Zum Abschluß deaktiviert das Skript *Automatische Prüfpunkte verwenden* auf ei
 Starte als Erstes den DC und melde dich als *Administrator* an. Im DVD-Laufwerk befindet sich die *"&lt;Laufwerksbuchstabe&gt;:\vms\LiteTouchMedia.iso"*. Diese über den VM-Connect Menüpunkt *Medien, DVD-Laufwerk, Auswerfen* entfernen (Bild01) und über den gleichen Weg wieder einlegen (Bild02 und Bild03). Das ist erforderlich, damit der Autostart der DVD funktioniert (Bild04). In der VM dann den *Windows Deployment Wizard* ausführen (Bild05 und Bild06). 
 ![Bild01](/Bilder/Bild01.png)
 **Bild01**
+
 ![Bild02](/Bilder/Bild02.png)
 **Bild02**
+
 ![Bild03](/Bilder/Bild03.png)
 **Bild03**
+
 ![Bild04](/Bilder/Bild04.png)
 **Bild04**
+
 ![Bild05](/Bilder/Bild05.png)
 **Bild05**
+
 ![Bild06](/Bilder/Bild06.png)
 **Bild06**
+
 Im nun erscheinenden Fenster die zur VM passende Tasksequenz (DC01, DC02 oder DC03) auswählen (Bild07).
 ![Bild07](/Bilder/Bild07.png)
-**Bild07**  
+**Bild07** 
+ 
 Der Server wird nun zu einem DC für die Domäne *corp.howilab.local* und auch zum DHCP-Server für die Domäne. Nachdem die Tasksequenz beendet ist, die Warnungen des Servermanagers bearbeiten (Assistent zum Hochstufen des DCs und Abschluss der DHCP-Bereitstellung).
 
 #### App und Client
