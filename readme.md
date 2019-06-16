@@ -43,7 +43,8 @@ Zum Abschluß deaktiviert das Skript *Automatische Prüfpunkte verwenden* auf ei
 
 #### DC vorbereiten
 
-Starte als Erstes den DC und melde dich als *Administrator* an. Im DVD-Laufwerk befindet sich die *"&lt;Laufwerksbuchstabe&gt;:\vms\LiteTouchMedia.iso"*. Diese über den VM-Connect Menüpunkt *Medien, DVD-Laufwerk, Auswerfen* entfernen (Bild01) und über den gleichen Weg wieder einlegen (Bild02 und Bild03). Das ist erforderlich, damit der Autostart der DVD funktioniert (Bild04). In der VM dann den *Windows Deployment Wizard* ausführen (Bild05 und Bild06). 
+Starte als Erstes den DC und melde dich als *Administrator* an. Im DVD-Laufwerk befindet sich die *"&lt;Laufwerksbuchstabe&gt;:\vms\LiteTouchMedia.iso"*. Diese über den VM-Connect Menüpunkt *Medien, DVD-Laufwerk, Auswerfen* entfernen (Bild01) und über den gleichen Weg wieder einlegen (Bild02 und Bild03). Das ist erforderlich, damit der Autostart der DVD funktioniert (Bild04). In der VM dann den *Windows Deployment Wizard* ausführen (Bild05 und Bild06).
+
 ![Bild01](/Bilder/Bild01.png)
 **Bild01**
 
@@ -64,9 +65,15 @@ Starte als Erstes den DC und melde dich als *Administrator* an. Im DVD-Laufwerk 
 
 Im nun erscheinenden Fenster die zur VM passende Tasksequenz (DC01, DC02 oder DC03) auswählen (Bild07).
 ![Bild07](/Bilder/Bild07.png)
-**Bild07** 
- 
-Der Server wird nun zu einem DC für die Domäne *corp.howilab.local* und auch zum DHCP-Server für die Domäne. Nachdem die Tasksequenz beendet ist, die Warnungen des Servermanagers bearbeiten (Assistent zum Hochstufen des DCs und Abschluss der DHCP-Bereitstellung).
+**Bild07**
+
+Der Server wird nun zu einem DC für die Domäne *corp.howilab.local* und auch zum DHCP-Server für die Domäne. Nachdem die Tasksequenz beendet ist (Bild08), die Warnungen des Servermanagers bearbeiten (Assistent zum Hochstufen des DCs und Abschluss der DHCP-Bereitstellung, Bild09).
+
+![Bild08](/Bilder/Bild07.png)
+**Bild08**
+
+![Bild09](/Bilder/Bild07.png)
+**Bild09**
 
 #### App und Client
 
