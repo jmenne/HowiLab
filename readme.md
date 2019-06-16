@@ -72,7 +72,7 @@ Der Server wird nun zu einem DC für die Domäne *corp.howilab.local* und auch z
 ![Bild08](/Bilder/Bild08.png)
 **Bild08**
 
-![Bild09](/Bilder/Bild08.png)
+![Bild09](/Bilder/Bild09.png)
 **Bild09**
 
 #### App und Client
