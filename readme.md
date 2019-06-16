@@ -69,10 +69,10 @@ Im nun erscheinenden Fenster die zur VM passende Tasksequenz (DC01, DC02 oder DC
 
 Der Server wird nun zu einem DC für die Domäne *corp.howilab.local* und auch zum DHCP-Server für die Domäne. Nachdem die Tasksequenz beendet ist (Bild08), die Warnungen des Servermanagers bearbeiten (Assistent zum Hochstufen des DCs und Abschluss der DHCP-Bereitstellung, Bild09).
 
-![Bild08](/Bilder/Bild07.png)
+![Bild08](/Bilder/Bild08.png)
 **Bild08**
 
-![Bild09](/Bilder/Bild07.png)
+![Bild09](/Bilder/Bild08.png)
 **Bild09**
 
 #### App und Client
