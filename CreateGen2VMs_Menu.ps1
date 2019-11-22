@@ -128,12 +128,12 @@ do
            }  'E' {
                 Write-Host 'Erstelle Edge01'
                 # Erstelle Edge01 Basis Server 2012 R2
-                Buildvm -VmName App01 -OSBaseDisk $VMBaseDisk
+                Buildvm -VmName Edge01 -OSBaseDisk $VMBaseDisk -SecondNetwork $true
 
             } 'I' {
                 Write-Host 'Erstelle Inet01'
                 # Erstelle Inet01 Basis Server 2012 R2
-                Buildvm -VmName App01 -OSBaseDisk $VMBaseDisk
+                Buildvm -VmName Inet01 -OSBaseDisk $VMBaseDisk
             
            } '3' {
                 Write-Host 'Erstelle DC02'
