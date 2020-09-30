@@ -1,5 +1,5 @@
 ﻿# DataDisk initialisieren, partitionieren, formatieren 
-Get-Disk | Where partitionstyle -eq 'raw' | Initialize-Disk -PartitionStyle MBR -PassThru | New-Partition -UseMaximumSize -DriveLetter F | Format-Volume -FileSystem NTFS -NewFileSystemLabel "data" -Confirm:$false -Force
+Get-Disk | Where partitionstyle -eq 'raw' | Initialize-Disk -PartitionStyle MBR -PassThru | New-Partition -UseMaximumSize -DriveLetter E | Format-Volume -FileSystem NTFS -NewFileSystemLabel "data" -Confirm:$false -Force
 
 # Az-104 Repo runterladen
 $location = "c:\az104"
@@ -15,6 +15,15 @@ Invoke-RestMethod -Uri $RepositoryZipUrl -OutFile $ZipFile
 Expand-Archive -Path $zipfile -DestinationPath $location -force
 
 # jetzt noch allfiles / Instructions kopieren
+
+# Powershell Module Az, Msonline, AzureAD installieren
+Install-PackageProvider -Name Nuget -Force
+
+Set-PSRepository -Name PsGallery -InstallationPolicy Trusted 
+
+Install-Module Az -AllowClobber -Force
+Install-Module MSOnline -AllowClobber -Force
+Install-Module AzureAD -AllowClobber -Force
 
 #Install Chocolatey
 Set-ExecutionPolicy Bypass -Scope Process -Force
