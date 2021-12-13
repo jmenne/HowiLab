@@ -13,7 +13,7 @@ Benötigt wird ein Windows PC mit Hyper-V, entweder Windows 10 oder ein Serverbe
 ## Benötigte Dateien
 
 Das Powershell-Skript zum erstellen der VMs braucht Basis Images der gewünschten Betriebssysteme, da die VMs mit differenzierenden Festplatten erstellt werden.  
-Dazu müssen die Dateien BaseServer2012.vhd(x), BaseServer2016.vhd(x), BaseServer2019.vhd(x), BaseW81.vhd(x) und BaseW10.vhd(x) im Unterordner &lt;Laufwerksbuchstabe&gt;:\\vms\\howi-lab\\Base\\ liegen. Hierbei sollte es sich um "gesyspreppte" Betriebssysteme mit aktuellen Sicherheitsupdates handeln.  
+Dazu müssen die Dateien BaseServer2012.vhd(x), BaseServer2016.vhd(x), BaseServer2019.vhd(x), BaseServer2022.vhd(x) BaseW81.vhd(x), BaseW10.vhd(x) und BaseW11.vhd(x) im Unterordner &lt;Laufwerksbuchstabe&gt;:\\vms\\howi-lab\\Base\\ liegen. Hierbei sollte es sich um "gesyspreppte" Betriebssysteme mit aktuellen Sicherheitsupdates handeln.  
 Diese lassen sich z.B. mithilfe des Microsoft Deployment Toolkit (MDT) erstellen. Wie das geht beschreibt Johan Arwidmark in seinem [Blog](https://deploymentresearch.com/Research/Post/1676/Building-a-Windows-10-v1809-reference-image-using-Microsoft-Deployment-Toolkit-MDT) sehr ausführlich. Als Ergebnis bekommt man eine .wim Datei. Diese .wim Datei muss man dann noch in eine .vhd(x) umwandeln. Das erledigt das Powershell Skript **Convert-WindowsImage.ps1**, welches auf dem Server 2016 Installationsmedium im Ordner NanoServer\\NanoServerImageGenerator oder [hier](https://gallery.technet.microsoft.com/scriptcenter/Convert-WindowsImageps1-0fe23a8f) zu finden ist.
 
 ```powershell
@@ -82,6 +82,13 @@ Der APP Server wird Domänenmitglied, der IIS installiert, sowie eine Freigabe *
 (Hinweis: Manchmal funktioniert das Aufnehmen in die Domäne nicht!)  
 Der Client wird Domänenmitglied.
 Nach dem Neustart der VMs, kann man sich als *corp\Administrator* an der Domäne anmelden.
+
+#### Server 2022 Maschinen
+
+Bei den VMs **DC04** und **App04** sind zum konfigurieren folgende Schritte durchzuführen. Da das aktuelle MDT keine Rollen und Features installieren kann, hilft uns DSC (Desired State Configuration) aus der Patsche:
+
+- Aus dem Ordner dsc die jeweilige .zip Datei in der VM in einen neu zu erstellenden Ordner *c:\dsc* extrahieren
+- Auf dem Hyper-V Host das Skript *HVHost_xxx* ausführen
 
 ## Internetkonnektivität für die VMs
 
