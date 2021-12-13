@@ -25,8 +25,11 @@ do {
   $VMBaseDisk = $drivevms + "\howi-lab\Base\BaseServer2012.vhdx"
   $VMBaseDisk16 = $drivevms + "\howi-lab\Base\BaseServer2016.vhdx"
   $VMBaseDisk19 = $drivevms + "\howi-lab\Base\BaseServer2019.vhdx"
+  $VMBaseDisk22 = $drivevms + "\howi-lab\Base\BaseServer2022.vhdx"
   $VMBaseClient = $drivevms + "\howi-lab\Base\BaseW81.vhdx"
   $VMBase10Client = $drivevms + "\howi-lab\Base\BaseW10.vhdx"
+  $VMBase11Client = $drivevms + "\howi-lab\Base\BaseW11.vhdx"
+
 
 # Virtuelle Switche erstellen
 function SwitchTest ($SwitchName = "StandadrdSwitch") {
@@ -62,6 +65,9 @@ function injectunattend ($VMName, $imgPath) {
 # Virtuelle Gen2 Maschinen erstellen 
 function BuildVM ($VmName, $VMMemory=2048MB, $VMDiskSize=0GB, $VMNetwork = "Corpnet", $SecondNetwork=$false, $OSBaseDisk) {
 
+  if (get-vm -Name $VmName -ErrorAction SilentlyContinue) 
+    {write-host "Eine VM mit dem Namen $VMName gibt es schon!" -ForegroundColor Green}
+  else {
   New-VM -Generation 2 -Name $VMName -MemoryStartupBytes $VMMemory -SwitchName $VMNetwork -Path $VMLocation -NoVHD
   $VHDPath = New-VHD -Path "$VMLocation\$VMName\Virtual Hard Disks\$VMName-Disk1.vhdx" -ParentPath $OSBasedisk -SizeBytes $VMDiskSize
   # Falls noch keine Antwortdatei im Image vorhanden, die nächste Zeile entkommentieren!
@@ -70,9 +76,15 @@ function BuildVM ($VmName, $VMMemory=2048MB, $VMDiskSize=0GB, $VMNetwork = "Corp
   Set-VMFirmware -VMname $vmName -FirstBootDevice (Get-VMHardDiskDrive -VMName $vmName)[0]
   Add-VMDvdDrive -VMName $VMName -Path $VMIso
   Set-VMMemory -VMName $VMName -DynamicMemoryEnabled $false
+  Set-VMProcessor -VMName $VmName -Count 2
   Set-VM -Name $VMName  -AutomaticStopAction ShutDown
+  If ($VmName -eq "Client03") {
+     Set-VMKeyProtector -VMName $VmName -NewLocalKeyProtector
+     Enable-VMTPM -VMName $VmName
+     }
   If ($SecondNetwork) {
     Add-VMNetworkAdapter -VMName $VMname -SwitchName "Inet"
+  }
   }
 }
 
@@ -101,10 +113,16 @@ function Show-Menu
      Write-Host "5: DC03"
      Write-Host "6: App03"
      Write-Host
+     Write-Host "Maschinen auf Basis Server 2022" -ForegroundColor Green
+     Write-Host "-------------------------------" -ForegroundColor Green
+     Write-Host "7: DC04"
+     Write-Host "8: App04"
+     Write-Host
      Write-Host "Windows Client Maschinen" -ForegroundColor Green
      Write-Host "------------------------" -ForegroundColor Green
-     Write-Host "7: Client01 - Windows 8.1"
-     Write-Host "8: Client02 - Windows 10"
+     Write-Host "9: Client01 - Windows 8.1"
+     Write-Host "10: Client02 - Windows 10"
+     Write-Host "11: Client03 - Windows 11"
      Write-Host
      Write-Host "F: Fertig" -ForegroundColor Green
  }   
@@ -146,23 +164,38 @@ do
                 Buildvm -VmName App02 -OSBaseDisk $VMBaseDisk16
            } '5' {
                 Write-Host 'Erstelle DC03'
-                 # Erstelle DC02 Basis Server 2016
+                 # Erstelle DC03 Basis Server 2019
                  Buildvm -VmName DC03 -OSBaseDisk $VMBaseDisk19
             
            } '6' {
                 Write-Host 'Erstelle App03'
-                # Erstelle App02 Basis Server 2016
+                # Erstelle App03 Basis Server 2019
                 Buildvm -VmName App03 -OSBaseDisk $VMBaseDisk19
-                
+
            } '7' {
+                Write-Host 'Erstelle DC04'
+                 # Erstelle DC04 Basis Server 2022
+                 Buildvm -VmName DC04 -OSBaseDisk $VMBaseDisk22
+            
+           } '8' {
+                Write-Host 'Erstelle App04'
+                # Erstelle App04 Basis Server 2022
+                Buildvm -VmName App04 -OSBaseDisk $VMBaseDisk22
+                
+           } '9' {
                 Write-Host 'Erstelle Client01'
                 # Erstelle Client01 Basis Windows 8.1
                 Buildvm -VmName Client01 -OSBaseDisk $VMBaseClient
 
-            }'8' {
+           }'10' {
                 Write-Host 'Erstelle Client02'
                 # Erstelle Client02 Basis Windows 10
                 Buildvm -VmName Client02 -OSBaseDisk $VMBase10Client
+
+           }'11' {
+                Write-Host 'Erstelle Client03'
+                # Erstelle Client03 Basis Windows 11
+                Buildvm -VmName Client03 -OSBaseDisk $VMBase11Client
            
            } 'f' {
                 break
@@ -176,8 +209,11 @@ until ($input -eq 'f')
 # Automatische Prüfpunkte auf Win10 deaktivieren
 if ((Get-CimInstance Win32_OperatingSystem).Name -like "*Windows 10*") {
     $vms=(get-vm).Name
-    foreach ($computername in $vms) {Set-VM -name $computername -AutomaticCheckpointsEnabled $false
-                                     Write-Host "Deaktiviere automatische Prüfpunkte für $computername"}
+    foreach ($computername in $vms) {
+        if ((Get-VM -Name $computername).AutomaticCheckpointsEnabled -eq $true ) {
+            Set-VM -name $computername -AutomaticCheckpointsEnabled $false
+            Write-Host "Deaktiviere automatische Prüfpunkte für $computername"}
+        }
   }
 
 pause
